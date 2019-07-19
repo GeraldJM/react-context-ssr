@@ -1,6 +1,10 @@
 import React, { useState, useContext } from 'react';
 import UserContext from './context/UserContext';
 
+import Card from '@material-ui/core/Card';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+
 const AddMovieForm = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -28,11 +32,30 @@ const AddMovieForm = () => {
   };
 
   return (
-    <form onSubmit={addUserAndReset}>
-      <input type="text" name="firstName" value={firstName} onChange={updateFirstName}/>
-      <input type="text" name="lastName" value={lastName} onChange={updateLastName}/>
-      <input type="submit" value="Add User" />
-    </form>
+    <Card style={{padding: '1rem', alignItems: 'center'}}>
+      <form onSubmit={addUserAndReset}>
+        <TextField
+          fullWidth
+          name="firstName"
+          label="First Name"
+          placeholder="Enter First Name"
+          margin="normal"
+          value={firstName} 
+          onChange={updateFirstName}
+        />
+
+        <TextField
+          fullWidth
+          name="lastName"
+          label="Last Name"
+          placeholder="Enter Last Name"
+          margin="normal"
+          value={lastName} 
+          onChange={updateLastName}
+        />
+        <Button style={{color: 'white', backgroundColor: '#00c25e'}} type="submit" variant="contained">Add User</Button>
+      </form>
+    </Card>
   )
 }
 

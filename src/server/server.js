@@ -5,15 +5,22 @@ import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 import { matchRoutes } from 'react-router-config';
 
+import { ServerStyleSheets, ThemeProvider } from '@material-ui/styles';
+import theme from '../shared/theme';
+
 import Routes from '../shared/Routes';
 import handleRender from './handleRender';
 import App from '../shared/App';
+
+
 
 const app = express();
 
 app.use(express.static('public'));
 
 app.get('*', (req, res) => {
+  const sheets = new ServerStyleSheets();
+
   const matchedRoutes = matchRoutes(Routes, req.url);
   const promises = matchedRoutes.map(({route, match}) => {
     return route.loadInitialData 
@@ -21,16 +28,20 @@ app.get('*', (req, res) => {
     : Promise.resolve(null);
   })
 
-  console.log(matchedRoutes);
-
   Promise.all(promises).then(data => {
     const content = renderToString(
-      <StaticRouter location={req.path} context={{}}>
-        <App data={data[0]}/>
-      </StaticRouter>
+      sheets.collect(
+        <ThemeProvider theme={theme}>
+          <StaticRouter location={req.path} context={{}}>
+            <App data={data[0]}/>
+          </StaticRouter>
+        </ThemeProvider>
+      )
     );
 
-    res.send(handleRender(content, data[0]));
+    const css = sheets.toString();
+
+    res.send(handleRender(content, css, data[0]));
   }); 
 })
 

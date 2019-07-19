@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { renderRoutes } from 'react-router-config';
 import axios from 'axios';
 
+import NavBar from './components/NavBar';
+
 import UserContext from '../shared/components/context/UserContext';
 import Routes from './Routes';
 
@@ -42,17 +44,19 @@ class App extends Component {
   render() {
     return (
       <div>
-        <h1>App</h1>
-        <UserContext.Provider 
-        value={
-          {
-            users: this.state.users, 
-            getUsers: this.getUsers, 
-            addUser: this.addUser
-          }
-        }>
-          {renderRoutes(Routes)}
-        </UserContext.Provider>
+        <NavBar />
+        <div>
+          <UserContext.Provider 
+          value={
+            {
+              users: this.state.users, 
+              getUsers: this.getUsers, 
+              addUser: this.addUser
+            }
+          }>
+            {renderRoutes(Routes)}
+          </UserContext.Provider>
+        </div>
       </div>
     )
   }

@@ -1,9 +1,12 @@
 import serialize from 'serialize-javascript';
 
-export default (html, contextValue) => {
+export default (html, css, contextValue) => {
   return `
     <html>
-      <head></head>
+      <head>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+        <style id="jss-server-side">${css}</style>
+      </head>
       <body>
         <div id="root">${html}</div>
         <script src="bundle.js" defer></script>
