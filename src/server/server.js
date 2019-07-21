@@ -3,15 +3,12 @@ import express from 'express';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
-
 import { ServerStyleSheets, ThemeProvider } from '@material-ui/styles';
-import theme from '../shared/theme';
 
+import theme from '../shared/theme';
 import Routes from '../shared/Routes';
 import handleRender from './handleRender';
 import App from '../shared/App';
-
-
 
 const app = express();
 

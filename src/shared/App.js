@@ -3,7 +3,6 @@ import { renderRoutes } from 'react-router-config';
 import axios from 'axios';
 
 import NavBar from './components/NavBar';
-
 import UserContext from '../shared/components/context/UserContext';
 import Routes from './Routes';
 

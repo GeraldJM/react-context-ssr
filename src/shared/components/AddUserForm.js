@@ -1,12 +1,16 @@
 import React, { useState, useContext } from 'react';
+import {
+  Card, 
+  CardHeader, 
+  CardContent,
+  Grid,
+  TextField, 
+  Checkbox,
+  Button, 
+  Typography
+} from '@material-ui/core';
+
 import UserContext from './context/UserContext';
-
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
-
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 
 const AddMovieForm = () => {
   const [firstName, setFirstName] = useState('');
@@ -16,16 +20,21 @@ const AddMovieForm = () => {
   const { addUser } = useContext(UserContext);
 
   const updateFirstName = e => {
-    setFirstName(e.target.value)
+    setFirstName(e.target.value);
   };
 
   const updateLastName = e => {
-    setLastName(e.target.value)
+    setLastName(e.target.value);
   };
+
+  const updateIsAdmin = () => {
+    setIsAdmin(!isAdmin);
+  }
 
   const resetForm = e => {
     setFirstName('');
     setLastName('');
+    setIsAdmin(false);
   };
 
   const addUserAndReset = e => {
@@ -36,30 +45,52 @@ const AddMovieForm = () => {
   };
 
   return (
-    <Card style={{padding: '1rem', alignItems: 'center'}}>
+    <Card style={{padding: '0 6rem'}}>
       <CardHeader title="New User" />
       <CardContent>
         <form onSubmit={addUserAndReset}>
-          <TextField
-            fullWidth
-            name="firstName"
-            label="First Name"
-            placeholder="Enter First Name"
-            margin="normal"
-            value={firstName} 
-            onChange={updateFirstName}
-          />
-
-          <TextField
-            fullWidth
-            name="lastName"
-            label="Last Name"
-            placeholder="Enter Last Name"
-            margin="normal"
-            value={lastName} 
-            onChange={updateLastName}
-          />
-          <Button style={{color: 'white', backgroundColor: '#00c25e'}} type="submit" variant="contained">Add User</Button>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                name="firstName"
+                label="First Name"
+                placeholder="Enter First Name"
+                margin="normal"
+                value={firstName} 
+                onChange={updateFirstName}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                name="lastName"
+                label="Last Name"
+                placeholder="Enter Last Name"
+                margin="normal"
+                value={lastName} 
+                onChange={updateLastName}
+              />
+            </Grid>
+            <Grid item xs={2}>
+              <Typography>Administrator?</Typography>
+            </Grid>
+            <Grid item xs={9} style={{marginLeft: '1rem'}}>
+              <Checkbox checked={isAdmin} onChange={updateIsAdmin} />
+            </Grid>
+            <Grid item xs={12}>
+              <Button
+                fullWidth
+                style={{
+                  color: 'white', 
+                  backgroundColor: '#00c25e'
+                }} 
+                type="submit" 
+                variant="contained">
+                Add User
+              </Button>
+            </Grid>
+          </Grid>
         </form>
       </CardContent>
     </Card>
