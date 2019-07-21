@@ -7,11 +7,12 @@ import NavBar from './components/NavBar';
 import UserContext from '../shared/components/context/UserContext';
 import Routes from './Routes';
 
-
 class App extends Component {
-  users = isBrowser ? window.CONTEXT_VALUE : this.props.data;
+  data = isBrowser ? window.CONTEXT_VALUE : this.props.data;
   state = {
-    users: this.users
+    users: this.data.users,
+    filteredUsers: this.data.users,
+    currentFilter: "none"
   }
 
   getUsers = () => {
@@ -28,30 +29,46 @@ class App extends Component {
           return;
         }
 
+        user._id = this.state.users.length + 1
         this.setState({
-          users: [
-            ...this.state.users, 
-            {
-              _id: this.state.users.length + 1,
-              firstName: user.firstName,
-              lastName: user.lastName
-            }
-          ]
+          users: [...this.state.users, user]
         });
+
+        if(user.isAdmin == this.state.currentFilter) {
+          user._id = this.state.filteredUsers.length + 1
+          this.setState({
+            filteredUsers: [...this.state.filteredUsers, user]
+          })
+        }
       });
   }
+
+  setFilter = (filter = "none") => {
+    if(typeof filter === "boolean") {
+      this.setState({
+        filteredUsers: this.state.users.filter(user => user.isAdmin == filter),
+        currentFilter: filter
+      })
+    } else {
+      this.setState({
+        filteredUsers: this.state.users,
+        currentFilter: "none"
+      })
+    };
+  };
 
   render() {
     return (
       <div>
         <NavBar />
-        <div>
+        <div style={{margin: '0 30%'}}>
           <UserContext.Provider 
           value={
             {
-              users: this.state.users, 
+              filteredUsers: this.state.filteredUsers,
               getUsers: this.getUsers, 
-              addUser: this.addUser
+              addUser: this.addUser,
+              setFilter: this.setFilter
             }
           }>
             {renderRoutes(Routes)}

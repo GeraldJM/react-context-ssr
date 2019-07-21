@@ -6,8 +6,15 @@ const getUsers = async () => {
     .catch(err => console.log(err));
 }
 
+const getAdmins = async () => {
+  return axios.get('http://localhost:3000/users/admins')
+    .then(res => res.data)
+    .catch(err => console.log(err));
+}
+
 const apiMethods = {
-  getUsers
+  getUsers,
+  getAdmins
 }
 
 export default apiMethods;

@@ -6,13 +6,15 @@ const Routes = [
   {
     component: HomePage,
     path: '/',
-    exact: true
+    exact: true,
+    linkText: 'Home'
   },
   {
     component: UsersPage,
     path: '/users',
-    loadInitialData: () => apiMethods.getUsers()
+    loadInitialData: () => apiMethods.getUsers(),
+    linkText: 'Users'
   }
 ];
 
-export default Routes
+export default Routes;

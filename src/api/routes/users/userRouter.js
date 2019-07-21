@@ -6,13 +6,14 @@ const userRouter = Router()
 
 userRouter.route('/')
   .get((req, res) => {
-    User.find({}, (err, users) => err ? console.log(err) : res.send(users))
+    User.find({}, (err, users) => err ? res.send(err) : res.send(users))
   })
   .post((req, res) => {
     let newUser = new User({
       _id: new mongoose.Types.ObjectId(),
       firstName: req.body.firstName,
-      lastName: req.body.lastName
+      lastName: req.body.lastName,
+      isAdmin: req.body.isAdmin,
     })
 
     newUser.save((err) => {
@@ -30,6 +31,11 @@ userRouter.route('/')
         });
       });
     })
+  });
+
+userRouter.route('/admins')
+  .get((req, res) => {
+    User.find({isAdmin: true}, (err, users) => err ? res.send(err) : res.send(users))
   })
 
 export default userRouter;

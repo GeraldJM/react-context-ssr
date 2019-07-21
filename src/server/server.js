@@ -3,7 +3,6 @@ import express from 'express';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
-import { matchRoutes } from 'react-router-config';
 
 import { ServerStyleSheets, ThemeProvider } from '@material-ui/styles';
 import theme from '../shared/theme';
@@ -21,19 +20,22 @@ app.use(express.static('public'));
 app.get('*', (req, res) => {
   const sheets = new ServerStyleSheets();
 
-  const matchedRoutes = matchRoutes(Routes, req.url);
-  const promises = matchedRoutes.map(({route, match}) => {
+  const promises = Routes.map((route) => {
     return route.loadInitialData 
     ? route.loadInitialData()
     : Promise.resolve(null);
   })
 
   Promise.all(promises).then(data => {
+    const allData = {
+      users: data[1]
+    }
+
     const content = renderToString(
       sheets.collect(
         <ThemeProvider theme={theme}>
           <StaticRouter location={req.path} context={{}}>
-            <App data={data[0]}/>
+            <App data={allData}/>
           </StaticRouter>
         </ThemeProvider>
       )
@@ -41,7 +43,7 @@ app.get('*', (req, res) => {
 
     const css = sheets.toString();
 
-    res.send(handleRender(content, css, data[0]));
+    res.send(handleRender(content, css, allData));
   }); 
 })
 
