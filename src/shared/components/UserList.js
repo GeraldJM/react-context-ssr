@@ -21,13 +21,34 @@ const UserList = () => {
             <div style={{padding: '0.2rem'}}>
               <Grid container spacing={1}>
                 <Grid item xs={4}>
-                  <Button onClick={() => setFilter(false)} fullWidth variant="contained">Standard Users</Button>
+                  <Button 
+                    style={{color: 'white'}} 
+                    color="primary" 
+                    onClick={() => setFilter(false)} 
+                    fullWidth 
+                    variant="contained">
+                    Standard Users
+                  </Button>
                 </Grid>
                 <Grid item xs={4}>
-                  <Button onClick={() => setFilter(true)} fullWidth variant="contained">Admins</Button>
+                  <Button 
+                    style={{color: 'white'}} 
+                    color="primary" 
+                    onClick={() => setFilter(true)} 
+                    fullWidth 
+                    variant="contained">
+                    Admins
+                  </Button>
                 </Grid>
                 <Grid item xs={4}>
-                  <Button onClick={setFilter} fullWidth variant="contained">All</Button>
+                  <Button 
+                    style={{color: 'white'}} 
+                    color="primary" 
+                    onClick={setFilter} 
+                    fullWidth 
+                    variant="contained">
+                    All
+                  </Button>
                 </Grid>
                 <Grid item xs={12}>
                   <Table style={{border: '1px solid red'}}>

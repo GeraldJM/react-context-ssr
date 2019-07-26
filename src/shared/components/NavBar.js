@@ -14,7 +14,7 @@ import Routes from '../Routes';
 const NavBar = () => {
   return (
     <div style={{marginBottom: '100px'}}>
-      <AppBar title="UsersApp">
+      <AppBar style={{color: 'white'}} title="UsersApp">
         <Toolbar>
           <Typography variant="h6" style={{flexGrow: 1}}>UsersApp</Typography>
           {Routes.map(({path, linkText}, index) => (
