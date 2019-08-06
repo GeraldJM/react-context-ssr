@@ -22,8 +22,8 @@ class App extends Component {
 
   addUser = (user) => {
     axios.post('http://localhost:3000/users', user)
-      .then((res) => {
-        if(!res.data.status) {
+      .then(res => {
+        if(res.data.error) {
           console.log('error', res.data)
           return;
         }
@@ -40,6 +40,26 @@ class App extends Component {
           })
         }
       });
+  }
+
+  deleteUser = (user) => {
+    axios.post(`http://localhost:3000/users/${user._id}`)
+      .then(res => {
+        if(res.error) {
+          console.log(error);
+          return;
+        }
+
+        this.setState({
+          users: this.state.users.filter(u => u._id != user._id)
+        })
+
+        if(user.isAdmin == this.state.currentFilter) {
+          this.setState({
+            filteredUsers: this.state.filteredUsers.filter(u => u._id != user._id)            
+          })
+        }
+      })
   }
 
   setFilter = (filter = "none") => {
@@ -62,14 +82,13 @@ class App extends Component {
         <NavBar />
         <div style={{margin: '0 30%'}}>
           <UserContext.Provider 
-          value={
-            {
+          value={{
               filteredUsers: this.state.filteredUsers,
               getUsers: this.getUsers, 
               addUser: this.addUser,
+              deleteUser: this.deleteUser,
               setFilter: this.setFilter
-            }
-          }>
+          }}>
             {renderRoutes(Routes)}
           </UserContext.Provider>
         </div>
