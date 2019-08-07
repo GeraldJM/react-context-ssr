@@ -16,18 +16,39 @@ const UserList = () => {
   return (
     <Paper style={{marginTop: '1rem', borderRadius: '0px'}}>
         <UserContext.Consumer>
-        {({filteredUsers, setFilter}) => {
+        {({filteredUsers, deleteUser, setFilter}) => {
           return (
             <div style={{padding: '0.2rem'}}>
               <Grid container spacing={1}>
                 <Grid item xs={4}>
-                  <Button onClick={() => setFilter(false)} fullWidth variant="contained">Standard Users</Button>
+                  <Button 
+                    style={{color: 'white'}} 
+                    color="primary" 
+                    onClick={() => setFilter(false)} 
+                    fullWidth 
+                    variant="contained">
+                    Standard Users
+                  </Button>
                 </Grid>
                 <Grid item xs={4}>
-                  <Button onClick={() => setFilter(true)} fullWidth variant="contained">Admins</Button>
+                  <Button 
+                    style={{color: 'white'}} 
+                    color="primary" 
+                    onClick={() => setFilter(true)} 
+                    fullWidth 
+                    variant="contained">
+                    Admins
+                  </Button>
                 </Grid>
                 <Grid item xs={4}>
-                  <Button onClick={setFilter} fullWidth variant="contained">All</Button>
+                  <Button 
+                    style={{color: 'white'}} 
+                    color="primary" 
+                    onClick={setFilter} 
+                    fullWidth 
+                    variant="contained">
+                    All
+                  </Button>
                 </Grid>
                 <Grid item xs={12}>
                   <Table style={{border: '1px solid red'}}>
@@ -35,6 +56,7 @@ const UserList = () => {
                       <TableRow>
                         <TableCell>Last Name</TableCell>
                         <TableCell>First Name</TableCell>
+                        <TableCell>Actions</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -42,6 +64,11 @@ const UserList = () => {
                       <TableRow key={index}>
                         <TableCell>{user.lastName}</TableCell>
                         <TableCell>{user.firstName}</TableCell>
+                        <TableCell>
+                          <Button onClick={() => deleteUser(user)}>
+                            Delete
+                          </Button>
+                        </TableCell>
                       </TableRow>
                     ))}
                     </TableBody>

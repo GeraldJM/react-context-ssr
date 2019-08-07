@@ -24,10 +24,7 @@ app.get('*', (req, res) => {
   })
 
   Promise.all(promises).then(data => {
-    const allData = {
-      users: data[1]
-    }
-
+    let allData = data[1]
     const content = renderToString(
       sheets.collect(
         <ThemeProvider theme={theme}>
