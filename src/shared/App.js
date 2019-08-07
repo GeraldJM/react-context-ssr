@@ -33,7 +33,7 @@ class App extends Component {
           users: [...this.state.users, user]
         });
 
-        if(user.isAdmin == this.state.currentFilter) {
+        if(user.isAdmin == this.state.currentFilter || this.state.currentFilter == "none") {
           user._id = this.state.filteredUsers.length + 1
           this.setState({
             filteredUsers: [...this.state.filteredUsers, user]
@@ -54,7 +54,7 @@ class App extends Component {
           users: this.state.users.filter(u => u._id != user._id)
         })
 
-        if(user.isAdmin == this.state.currentFilter) {
+        if(user.isAdmin == this.state.currentFilter || this.state.currentFilter == "none") {
           this.setState({
             filteredUsers: this.state.filteredUsers.filter(u => u._id != user._id)            
           })

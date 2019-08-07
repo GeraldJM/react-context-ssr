@@ -65,9 +65,7 @@ const UserList = () => {
                         <TableCell>{user.lastName}</TableCell>
                         <TableCell>{user.firstName}</TableCell>
                         <TableCell>
-                          <Button 
-                            style={{color: 'red'}} 
-                            onClick={() => deleteUser(user)}>
+                          <Button onClick={() => deleteUser(user)}>
                             Delete
                           </Button>
                         </TableCell>
