@@ -16,7 +16,7 @@ const UserList = () => {
   return (
     <Paper style={{marginTop: '1rem', borderRadius: '0px'}}>
         <UserContext.Consumer>
-        {({filteredUsers, deleteUser, setFilter}) => {
+        {({filteredUsers, openDialog, deleteUser, setFilter}) => {
           return (
             <div style={{padding: '0.2rem'}}>
               <Grid container spacing={1}>
@@ -56,6 +56,7 @@ const UserList = () => {
                       <TableRow>
                         <TableCell>Last Name</TableCell>
                         <TableCell>First Name</TableCell>
+                        <TableCell>Role</TableCell>
                         <TableCell>Actions</TableCell>
                       </TableRow>
                     </TableHead>
@@ -64,9 +65,13 @@ const UserList = () => {
                       <TableRow key={index}>
                         <TableCell>{user.lastName}</TableCell>
                         <TableCell>{user.firstName}</TableCell>
+                        <TableCell>{user.isAdmin ? 'Administrator' : 'Standard User'}</TableCell>
                         <TableCell>
                           <Button onClick={() => deleteUser(user)}>
                             Delete
+                          </Button>
+                          <Button onClick={() => openDialog(user)}>
+                            Edit
                           </Button>
                         </TableCell>
                       </TableRow>
