@@ -72,10 +72,10 @@ const AddMovieForm = () => {
                 onChange={updateLastName}
               />
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={3}>
               <Typography>Administrator?</Typography>
             </Grid>
-            <Grid item xs={9} style={{marginLeft: '1rem'}}>
+            <Grid item xs={8} style={{marginLeft: '1rem'}}>
               <Checkbox checked={isAdmin} onChange={updateIsAdmin} />
             </Grid>
             <Grid item xs={12}>

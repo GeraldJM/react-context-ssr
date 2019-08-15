@@ -5,6 +5,7 @@ import User from '../../models/User';
 const userRouter = Router()
 
 userRouter.route('/')
+
   //  gets full list of users
   .get((req, res) => {
     User.find({}, (err, users) => {
@@ -20,6 +21,7 @@ userRouter.route('/')
       })
     })
   })
+
   //  adds new user
   .post((req, res) => {
     let newUser = new User({
@@ -51,8 +53,9 @@ userRouter.route('/')
   });
 
 userRouter.route('/:id')
+
   //  deletes user
-  .post((req, res) => {
+  .delete((req, res) => {
     User.findByIdAndRemove(req.params.id, (err, user) => {
       err ? res.send({
         transaction: 'delete user',
@@ -64,6 +67,47 @@ userRouter.route('/:id')
         result: 'success', 
         deletedUser: user
       })
+    })
+  })
+
+  //  updates user
+  .put((req, res) => {
+    User.findById(req.params.id, (findErr, user) => {
+      if(findErr) {
+        res.send({
+          transaction: 'find user',
+          result: 'failed', 
+          error: err
+        })
+      } else {
+        let originalId = user._id;
+        let props = [];
+
+        User.schema.eachPath(p => props.push(p.toString()));
+
+        for(let p of props) {
+          if(p.toString() != '_id' || p.toString() != '__v') {
+            if(user[p] != req.body[p]) {
+              user[p] = req.body[p];
+            }
+          }
+        }
+
+        user._id = originalId;
+        user.save((saveErr, updatedUser) => {
+          saveErr ?
+            res.send({
+              transaction: 'update user',
+              result: 'failed',
+              error: saveErr
+            })
+          : res.send({
+            transaction: 'update user',
+            result: 'success',
+            updatedUser
+          })
+        })
+      }
     })
   })
 
